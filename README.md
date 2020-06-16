@@ -1,5 +1,6 @@
 # Docker iperf tool
 Docker container Iperf tool for network performance tests.
+
 The iperf tool version used on the image is 2.0.13 (21 Jan 2019)
 
 This iperf tool image can be found at:
@@ -28,7 +29,9 @@ docker run -d --name iperf -p 5001:5001/udp lroktu/iperf -s -u -i 5
 ```
 
 This command will start iperf in server mode(**-s**) to listen for udp connections(**-u**) and make bandwitdh traffic report every 5 seconds(**-i 5**). 
+
 The server will listen for connections comming on any interface existing inside the container.
+
 By default, iperf uses the port 5001, so we just need expose this port to external access.
 
 ## Iperf client
@@ -40,6 +43,7 @@ iperf -c CONTAINER_HOST_IP -u
 ```
 
 This command will start iperf in client mode(**-c**) to connect in the specific host ip. The **-u** represents that just udp packets will be sent.
+
 Or, another way, you can execute the same container image, but this time, passing client parameters, like below.
 
 ```
