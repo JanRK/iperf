@@ -1,0 +1,13 @@
+version: "3"
+services:
+        iperf:
+                image: lroktu/iperf
+                ports: 
+                    - 5001:5001/udp
+                networks:
+                    - iperf-net
+                command:
+                    -s -u
+                        
+networks:
+    iperf-net:
