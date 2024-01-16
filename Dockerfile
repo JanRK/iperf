@@ -3,7 +3,7 @@ FROM alpine:latest
 ARG UID="1000"
 ARG GID="1000"
 
-RUN apk add --no-cache iperf && \
+RUN apk add --no-cache iperf3 && \
     mkdir -p /opt/iperf && \
     addgroup --g "${GID}" -S iperf && \
     adduser -h /opt/iperf -s /bin/sh -u "${UID}" -G iperf -S iperf && \
@@ -16,4 +16,4 @@ EXPOSE 5201/tcp
 USER "iperf"
 WORKDIR /opt/iperf
 
-ENTRYPOINT [ "/usr/bin/iperf" ]
+ENTRYPOINT [ "/usr/bin/iperf3" ]
