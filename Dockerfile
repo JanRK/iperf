@@ -10,8 +10,8 @@ RUN apk add --no-cache iperf && \
     cd /opt/iperf && \
     chown iperf:iperf -R /opt/iperf
 
-EXPOSE 5001/udp
-EXPOSE 5001/tcp
+EXPOSE 5201/udp
+EXPOSE 5201/tcp
 
 USER "iperf"
 WORKDIR /opt/iperf
