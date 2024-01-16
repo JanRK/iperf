@@ -5,7 +5,7 @@ services:
         image: quay.io/janrk/iperf
         restart: always
         ports: 
-            - 5001:5001/udp
-        network_mode: "host"
+            - 5201:5201/tcp
+            - 5201:5201/udp
         command:
-            -s -u
+            --server
