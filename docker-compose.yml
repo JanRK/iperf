@@ -1,13 +1,11 @@
 version: "3"
 services:
-        iperf:
-                image: lroktu/iperf
-                ports: 
-                    - 5001:5001/udp
-                networks:
-                    - iperf-net
-                command:
-                    -s -u
-                        
-networks:
-    iperf-net:
+    iperf:
+        container_name: iperf
+        image: quay.io/janrk/iperf
+        restart: always
+        ports: 
+            - 5001:5001/udp
+        network_mode: "host"
+        command:
+            -s -u
