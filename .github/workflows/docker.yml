@@ -1,0 +1,34 @@
+name: Docker Build Publish
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Build image
+        run: docker build . --file Dockerfile --tag ${GITHUB_REPOSITORY,,}
+
+      - name: Log into registry
+        run: |
+          echo "${{ secrets.QUAY_TOKEN }}" | docker login quay.io --username ${{ secrets.QUAY_USER }} --password-stdin
+
+      - name: Push image to quay.io
+        run: |
+          IMAGE_ID=${GITHUB_REPOSITORY,,}
+          # Strip git ref prefix from version
+          VERSION=$(echo "${{ github.ref }}" | sed -e 's,.*/\(.*\),\1,')
+          # Strip "v" prefix from tag name
+          [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
+          # Use Docker `latest` tag convention
+          [ "$VERSION" == "master" ] && VERSION=latest
+          [ "$VERSION" == "main" ] && VERSION=latest
+          echo IMAGE_ID=$IMAGE_ID
+          echo VERSION=$VERSION
+          docker tag $IMAGE_ID quay.io/$IMAGE_ID:$VERSION
+          docker push quay.io/$IMAGE_ID:$VERSION
