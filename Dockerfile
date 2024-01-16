@@ -3,9 +3,7 @@ FROM alpine:latest
 ARG UID="1000"
 ARG GID="1000"
 
-RUN apk update && \
-    apk add iperf && \
-    rm -rf /var/cache/apk/* && \
+RUN apk add --no-cache iperf && \
     mkdir -p /opt/iperf && \
     addgroup --g "${GID}" -S iperf && \
     adduser -h /opt/iperf -s /bin/sh -u "${UID}" -G iperf -S iperf && \
@@ -15,11 +13,7 @@ RUN apk update && \
 EXPOSE 5001/udp
 EXPOSE 5001/tcp
 
-
 USER "iperf"
 WORKDIR /opt/iperf
 
 ENTRYPOINT [ "/usr/bin/iperf" ]
-
-
-
